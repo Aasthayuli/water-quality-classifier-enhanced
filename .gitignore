@@ -1,0 +1,85 @@
+# ------------------------
+# Python
+# ------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter temporary
+.ipynb_checkpoints/
+
+# Byte-compiled / cache
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# ------------------------
+# OS-specific
+# ------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS (in case repo kabhi Mac se open ho)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ------------------------
+# Logs & Outputs
+# ------------------------
+outputs/logs/
+outputs/graphs/
+outputs/predictions/
+*.log
+
+# ------------------------
+# ML/DL Checkpoints & Models
+# ------------------------
+models/**/*.pt
+models/**/*.pth
+models/**/*.ckpt
+*.h5
+*.onnx
+
+# ------------------------
+# Local Data
+# ------------------------
+data/water_dataset/
+data/**/raw/
+data/**/temp/
+*.zip
+*.tar
+*.tar.gz
+
+# ------------------------
+# IDE / Editor
+# ------------------------
+.vscode/
+.idea/
+*.iml
+
+# ------------------------
+# Configs
+# ------------------------
+configs/*.yaml
+configs/*.yml
+configs/*.json
+
+# ------------------------
+# Temp files
+# ------------------------
+*.tmp
+*.temp
+*.bak
+
+water-quality-structure.md
