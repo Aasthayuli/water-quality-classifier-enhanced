@@ -13,9 +13,13 @@ import random
 
 from src.utils.logger import setup_logger
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
+
+# Setup logger
 logger = setup_logger(
     name='data_split',
-    log_file='outputs/logs/data_split.log'
+    log_file=os.path.join(LOG_DIR, 'data_split.log')
 )
 
 def create_directories(base_path, classes):

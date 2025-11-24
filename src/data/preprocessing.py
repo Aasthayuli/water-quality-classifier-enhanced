@@ -11,11 +11,22 @@ Usage:
     test_transforms = get_transforms(mode='test')
 """
 
+import os
 import torch
 from torchvision import transforms
 from PIL import Image
 import numpy as np
 
+
+from src.utils.logger import setup_logger
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
+# Setup logger for testing
+logger = setup_logger(
+    name='preprocessing_test',
+    log_file=os.path.join(LOG_DIR, 'preprocessing_test.log')
+)
 
 # ImageNet statistics (ResNet18 pre-trained on ImageNet)
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
@@ -153,8 +164,8 @@ def denormalize_image(tensor, mean=IMAGENET_MEAN, std=IMAGENET_STD):
     denorm_tensor = tensor.clone()
     
     # Denormalize each channel
-    for t, m, s in zip(denorm_tensor, mean, std):
-        t.mul_(s).add_(m)  # t = t * std + mean
+    for tensor, m, s in zip(denorm_tensor, mean, std):
+        tensor.mul_(s).add_(m)  # tensor = tensor * std + mean
     
     # Clip values to [0, 1]
     denorm_tensor = torch.clamp(denorm_tensor, 0, 1)
@@ -213,7 +224,7 @@ def check_image_quality(image_path):
     Example:
         valid, msg = check_image_quality('image.jpg')
         if not valid:
-            print(f"Invalid image: {msg}")
+            print(f'Invalid image: {msg}')
     """
     
     try:
@@ -247,56 +258,56 @@ if __name__ == "__main__":
     Run: python src/data/preprocessing.py
     """
     
-    print("="*60)
-    print("Testing Preprocessing Functions")
-    print("="*60)
+    logger.info("="*60)
+    logger.info("Testing Preprocessing Functions")
+    logger.info("="*60)
     
     # Test 1: Get transforms
-    print("\n1. Getting transforms...")
+    logger.info("1. Getting transforms...")
     train_tf = get_transforms('train')
     test_tf = get_transforms('test')
-    print("Train transforms:", len(train_tf.transforms), "operations")
-    print("Test transforms:", len(test_tf.transforms), "operations")
+    logger.info(f"Train transforms: {len(train_tf.transforms)} operations")
+    logger.info(f"Test transforms: {len(test_tf.transforms)} operations")
     
     # Test 2: Display transform details
-    print("\n2. Train transforms details:")
+    logger.info("2. Train transforms details:")
     for i, t in enumerate(train_tf.transforms, 1):
-        print(f"   {i}. {t.__class__.__name__}")
+        logger.info(f"   {i}. {t.__class__.__name__}")
     
-    print("\n3. Test transforms details:")
+    logger.info("3. Test transforms details:")
     for i, t in enumerate(test_tf.transforms, 1):
-        print(f"   {i}. {t.__class__.__name__}")
+        logger.info(f"   {i}. {t.__class__.__name__}")
     
-    # Test 3: Check if can create dummy image
-    print("\n4. Testing with dummy image...")
+    # Test 3: Check if dummy image can be created
+    logger.info("4. Testing with dummy image...")
     try:
         # Create dummy RGB image
         dummy_img = Image.new('RGB', (300, 300), color='red')
         
         # Apply train transforms
         train_tensor = train_tf(dummy_img)
-        print(f"Train output shape: {train_tensor.shape}")
-        print(f"Expected: torch.Size([3, 224, 224])")
+        logger.info(f"Train output shape: {train_tensor.shape}")
+        logger.info(f"Expected: torch.Size([3, 224, 224])")
         
         # Apply test transforms
         test_tensor = test_tf(dummy_img)
-        print(f"Test output shape: {test_tensor.shape}")
-        print(f"Expected: torch.Size([3, 224, 224])")
+        logger.info(f"Test output shape: {test_tensor.shape}")
+        logger.info(f"Expected: torch.Size([3, 224, 224])")
         
     except Exception as e:
-        print(f"Error: {e}")
+        logger.error(f"Error: {e}")
     
     # Test 4: Denormalization
-    print("\n5. Testing denormalization...")
+    logger.info("5. Testing denormalization...")
     try:
         normalized = test_tf(dummy_img)
         denormalized = denormalize_image(normalized)
-        print(f"Denormalized range: [{denormalized.min():.3f}, {denormalized.max():.3f}]")
-        print(f"Expected: [0.000, 1.000]")
+        logger.info(f"Denormalized range: [{denormalized.min():.3f}, {denormalized.max():.3f}]")
+        logger.info(f"Expected: [0.000, 1.000]")
     except Exception as e:
-        print(f"Error: {e}")
+        logger.error(f"Error: {e}")
     
-    print("\n" + "="*60)
-    print("Preprocessing tests complete!")
-    print("="*60)
+    logger.info("="*60)
+    logger.info("Preprocessing tests complete!")
+    logger.info("="*60)
     
