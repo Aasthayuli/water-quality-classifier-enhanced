@@ -44,9 +44,9 @@ def setup_logger(name, log_file=None, level=logging.INFO, console_output=True):
     
     # Create formatter
     formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+    '%(asctime)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+  )
     
     # File handler (save to file)
     if log_file:
