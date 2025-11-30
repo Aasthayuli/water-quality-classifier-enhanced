@@ -340,9 +340,13 @@ class Trainer:
             
             # Update learning rate
             if self.scheduler is not None:
+                old_lr = self.optimizer.param_groups[0]['lr']
                 self.scheduler.step()
-                current_lr = self.optimizer.param_groups[0]['lr']
-                logger.info(f"Learning Rate: {current_lr}")
+                new_lr = self.optimizer.param_groups[0]['lr']
+                if old_lr != new_lr:
+                    logger.info(f"Learning Rate changed: {old_lr:.6f} → {new_lr:.6f}")
+                else:
+                    logger.info(f"Learning Rate: {new_lr:.6f}")
         
         logger.info("="*60)
         logger.info("Training Complete!")
