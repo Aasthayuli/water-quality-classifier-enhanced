@@ -20,3 +20,113 @@ The system leverages:
 - A dedicated preprocessing pipeline
 - Structured logging for training and inference
 - Upcoming video frame extraction module for real-time classification
+
+---
+
+## 📊 Current Results
+
+| Metric                       | Value                        |
+| ---------------------------- | ---------------------------- |
+| **Best Validation Accuracy** | 97.55%                       |
+| **Training Accuracy**        | 96.79%                       |
+| **Model**                    | ResNet18 (Transfer Learning) |
+| **Epochs Trained**           | 25                           |
+| **Date**                     | Dec 5, 2024                  |
+| **Status**                   | 🚧 Work in Progress          |
+
+> **Note:** Model training is ongoing. Results will be updated as improvements are made.
+
+---
+
+## 🎯 Project Status
+
+- [x] Dataset collection & preprocessing
+- [x] Model architecture (ResNet18)
+- [x] Training pipeline
+- [x] Initial training (97.55% accuracy)
+- [ ] Model evaluation & analysis
+- [ ] Inference scripts (image/video)
+- [ ] Web application (Streamlit)
+- [ ] Final optimization
+
+---
+
+## 📁 Project Structure
+
+```
+Water-Quality-Classifier/
+├── src/
+│   ├── data/           # Data loading & preprocessing
+│   ├── models/         # ResNet18 architecture
+│   ├── training/       # Training scripts
+│   └── utils/          # Utilities (logging, config)
+├── configs/            # Configuration files
+├── models/             # Saved models (.pth files)
+├── outputs/            # Logs, graphs, predictions
+└── data/               # Dataset (not included)
+```
+
+---
+
+## 🚀 Quick Start
+
+### Training
+
+```bash
+python src/training/train.py
+```
+
+### Configuration
+
+Edit `configs/config.yaml` to modify hyperparameters.
+
+---
+
+## 📈 Training Progress
+
+**Latest Model:** `best_model_20251205_003411_acc97.55.pth`
+
+Training logs available in `outputs/logs/`
+
+---
+
+## 🔧 Technologies Used
+
+- **Framework:** PyTorch
+- **Model:** ResNet18 (pretrained on ImageNet)
+- **Preprocessing:** torchvision transforms
+- **Augmentation:** Rotation, flip, color jitter
+- **Optimizer:** Adam
+- **Scheduler:** StepLR
+
+---
+
+## 📝 To-Do
+
+- Run comprehensive evaluation
+- Add confusion matrix visualization
+- Implement video inference
+- Create Streamlit dashboard
+- Optimize model further
+- Add deployment scripts
+
+---
+
+## ⚠️ Known Limitations
+
+- Model trained on high-quality stock images
+- May need fine-tuning for mobile camera images
+- Performance on low-light conditions untested
+- Future work: Add real-world mobile camera data
+
+---
+
+## 🤝 Contributing
+
+This is a work-in-progress project. Feedback and suggestions welcome!
+
+---
+
+## 📄 License
+
+MIT License
