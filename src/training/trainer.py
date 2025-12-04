@@ -16,14 +16,15 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 from datetime import datetime
-from src.utils.logger import create_timestamped_log
+from src.utils.logger import get_logger
 
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
+LOG_FILE = os.path.join(LOG_DIR, "training.log")
 
 # Setup logger
-logger = create_timestamped_log('trainer', LOG_DIR)
+logger = get_logger('training')
 
 
 class Trainer:
@@ -47,8 +48,7 @@ class Trainer:
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.config = config
-        device = torch.device(device if torch.cuda.is_available() else 'cpu')
-        self.device = device
+        self.device = torch.device(device if device == 'cuda' and torch.cuda.is_available() else 'cpu')
         
         # Move model to device
         logger.info(f"Moving model to {device}")
@@ -85,7 +85,6 @@ class Trainer:
         logger.info(f"Device: {device}")
         logger.info(f"Epochs: {self.epochs}")
         logger.info(f"Learning Rate: {self.learning_rate}")
-        logger.info(f"Optimizer: {config['training']['optimizer']}")
         logger.info(f"Training batches: {len(train_loader)}")
         logger.info(f"Validation batches: {len(val_loader)}")
         logger.info("="*60)
@@ -173,7 +172,7 @@ class Trainer:
         total = 0
         
         # Progress bar
-        pbar = tqdm(self.train_loader, desc=f"Epoch {epoch}/{self.epochs} [Train]")
+        pbar = tqdm(self.train_loader, desc=f"Epoch {epoch}/{self.epochs} [Train]",leave=True,dynamic_ncols=True)
         
         for batch_idx, (images, labels) in enumerate(pbar):
             # Move to device
@@ -304,11 +303,11 @@ class Trainer:
         """
         logger.info("="*60)
         logger.info("Starting Training")
-        logger.info("="*60)
+        logger.info("="*60+"\n")
         
         for epoch in range(1, self.epochs + 1):
-            logger.info(f"Epoch {epoch}/{self.epochs}")
             logger.info("-" * 60)
+            logger.info(f"Current Epoch {epoch}/{self.epochs}")
             
             # Train
             train_loss, train_acc = self.train_epoch(epoch)
@@ -327,7 +326,7 @@ class Trainer:
             logger.info(f"Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.2f}%")
             
             # Check if best model
-            is_best = val_acc > self.best_val_acc
+            is_best = val_acc >= self.best_val_acc
             if is_best:
                 self.best_val_acc = val_acc
                 self.best_epoch = epoch
@@ -344,9 +343,11 @@ class Trainer:
                 self.scheduler.step()
                 new_lr = self.optimizer.param_groups[0]['lr']
                 if old_lr != new_lr:
-                    logger.info(f"Learning Rate changed: {old_lr:.6f} → {new_lr:.6f}")
+                    logger.info(f"Learning Rate changed: {old_lr:.6f} to {new_lr:.6f}")
                 else:
-                    logger.info(f"Learning Rate: {new_lr:.6f}")
+                    logger.info(f"Current Learning Rate: {new_lr:.6f}")
+            logger.info(f"Epoch{epoch}/{self.epochs} Complete\n")
+            logger.info("-" * 60)
         
         logger.info("="*60)
         logger.info("Training Complete!")

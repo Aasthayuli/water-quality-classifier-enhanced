@@ -18,7 +18,7 @@ LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
 
 # Setup logger
 logger = setup_logger(
-    name='data_split',
+    __name__,
     log_file=os.path.join(LOG_DIR, 'data_split.log')
 )
 

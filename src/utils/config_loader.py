@@ -18,16 +18,17 @@ import os
 import yaml
 import json
 from pathlib import Path
-from src.utils.logger import setup_logger
-
-
-# Setup logger
-logger = setup_logger(
-    name='config_loader',
-    log_file='outputs/logs/config_loader.log'
-)
+from src.utils.logger import get_logger
+# from src.utils.logger import setup_logger # for standalone file testing
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+LOGS_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
+# Setup logger
+# logger = setup_logger(__name__, os.path.join(LOGS_DIR, 'config_loader.log')) # for standalone file testing
+logger = get_logger(
+    __name__
+)
+
 CONFIGS_DIR= os.path.join(PROJECT_ROOT, "configs")
 DEFAULT_CONFIG_PATH = os.path.join(CONFIGS_DIR, 'config.yaml')
 

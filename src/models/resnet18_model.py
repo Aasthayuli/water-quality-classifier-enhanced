@@ -23,13 +23,15 @@ import os
 import torch
 import torch.nn as nn
 from torchvision import models
-from src.utils.logger import create_timestamped_log
+from src.utils.logger import get_logger
+from src.utils.logger import setup_logger  # for testing
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
 
 # Setup logger
-logger = create_timestamped_log('resnet18_model', LOG_DIR)
+# logger = setup_logger(__name__, log_file=os.path.join(LOG_DIR, 'resnet18_model.log'))  # Uncomment this line for standalone testing of this file and comment the next line
+logger = get_logger(__name__)
 
 # Class names
 CLASS_NAMES = ['clean', 'muddy', 'polluted']

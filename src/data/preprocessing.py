@@ -18,15 +18,18 @@ from PIL import Image
 import numpy as np
 
 
-from src.utils.logger import setup_logger
+# from src.utils.logger import setup_logger
+from src.utils.logger import get_logger
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
+
 # Setup logger for testing
-logger = setup_logger(
-    name='preprocessing_test',
-    log_file=os.path.join(LOG_DIR, 'preprocessing_test.log')
-)
+# logger = setup_logger(
+#     __name__,
+#     log_file=os.path.join(LOG_DIR, 'preprocessing_test.log')
+# ) # for standalone testing
+logger = get_logger(__name__)
 
 # ImageNet statistics (ResNet18 pre-trained on ImageNet)
 IMAGENET_MEAN = [0.485, 0.456, 0.406]

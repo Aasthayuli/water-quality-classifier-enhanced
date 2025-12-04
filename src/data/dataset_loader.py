@@ -14,21 +14,21 @@ Usage:
 """
 
 import os
-import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 from src.data.preprocessing import get_transforms
-from src.utils.logger import setup_logger
+# from src.utils.logger import setup_logger # for standalone file testing
+from src.utils.logger import get_logger
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
 
 # Setup logger
-logger = setup_logger(
-    name='dataset_loader',
-    log_file=os.path.join(LOG_DIR, 'dataset_loader.log')
-)
-
+# logger = setup_logger(
+#     name='dataset_loader',
+#     log_file=os.path.join(LOG_DIR, 'dataset_loader.log')
+# ) # for standalone file testing
+logger = get_logger(__name__)
 
 # Class labels mapping
 CLASS_NAMES = ['clean', 'muddy', 'polluted']
