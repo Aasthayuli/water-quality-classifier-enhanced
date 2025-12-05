@@ -27,11 +27,11 @@ The system leverages:
 
 | Metric                       | Value                        |
 | ---------------------------- | ---------------------------- |
-| **Best Validation Accuracy** | 97.55%                       |
-| **Training Accuracy**        | 96.79%                       |
+| **Best Validation Accuracy** | 92.39%                       |
+| **Training Accuracy**        | 94.25%                       |
 | **Model**                    | ResNet18 (Transfer Learning) |
 | **Epochs Trained**           | 25                           |
-| **Date**                     | Dec 5, 2024                  |
+| **Date**                     | Dec 6, 2025                  |
 | **Status**                   | 🚧 Work in Progress          |
 
 > **Note:** Model training is ongoing. Results will be updated as improvements are made.
@@ -43,7 +43,7 @@ The system leverages:
 - [x] Dataset collection & preprocessing
 - [x] Model architecture (ResNet18)
 - [x] Training pipeline
-- [x] Initial training (97.55% accuracy)
+- [x] Initial training (92.39% accuracy)
 - [ ] Model evaluation & analysis
 - [ ] Inference scripts (image/video)
 - [ ] Web application (Streamlit)
@@ -84,7 +84,7 @@ Edit `configs/config.yaml` to modify hyperparameters.
 
 ## 📈 Training Progress
 
-**Latest Model:** `best_model_20251205_003411_acc97.55.pth`
+**Latest Model:** `best_model_20251206_012806_acc92.39.pth`
 
 Training logs available in `outputs/logs/`
 
