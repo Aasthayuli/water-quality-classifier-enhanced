@@ -55,6 +55,7 @@ models/**/*.ckpt
 # Local Data
 # ------------------------
 data/water_dataset/
+data/water_dataset_split/
 data/**/raw/
 data/**/temp/
 *.zip
