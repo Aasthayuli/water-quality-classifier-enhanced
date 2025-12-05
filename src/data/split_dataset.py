@@ -11,16 +11,19 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 import random
 
-from src.utils.logger import setup_logger
+# from src.utils.logger import setup_logger
+from src.utils.logger import create_timestamped_log
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
 
 # Setup logger
-logger = setup_logger(
-    __name__,
-    log_file=os.path.join(LOG_DIR, 'data_split.log')
-)
+# logger = setup_logger(
+#     __name__,
+#     log_file=os.path.join(LOG_DIR, 'data_split.log')
+# )
+log_name = os.path.splitext(os.path.basename(__file__))[0]
+logger = create_timestamped_log(log_name, log_dir=LOG_DIR)
 
 def create_directories(base_path, classes):
     """
@@ -32,6 +35,8 @@ def create_directories(base_path, classes):
     """
     for split in ['train', 'test']:
         for class_name in classes:
+            if class_name in ['train', 'test']:
+                continue
             dir_path = os.path.join(base_path, split, class_name)
             os.makedirs(dir_path, exist_ok=True)
             logger.info(f"Created: {dir_path}")
@@ -59,6 +64,15 @@ def split_dataset(
     logger.info("Starting Dataset Splitting...")
     logger.info("="*60)
     
+    # Clean previous split if any
+    train_base = os.path.join(dest_dir, 'train')
+    test_base = os.path.join(dest_dir, 'test')
+
+    if os.path.exists(train_base):
+        shutil.rmtree(train_base)
+    if os.path.exists(test_base):
+        shutil.rmtree(test_base)
+
     # Random seed setting
     random.seed(random_state)
     
@@ -79,9 +93,8 @@ def split_dataset(
             continue
         
         # creating list of every image
-        all_images = []
-        for ext in ['*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG']:
-            all_images.extend(list(Path(source_class_dir).glob(ext)))
+        all_images = list(set([str(f) for f in Path(source_class_dir).iterdir()if f.is_file() and f.suffix.lower() in ['.jpg', '.jpeg', '.png']
+]))
         
         # If images are not found
         if len(all_images) == 0:
@@ -157,36 +170,37 @@ def verify_split(base_dir, classes):
 
 if __name__ == "__main__":
     # Configuration
-    BASE_DIR = 'data/water_dataset'
+    source_directory = 'data/water_dataset'
+    destination_directory = 'data/water_dataset_split'
     CLASSES = ['clean', 'muddy', 'polluted']
     TEST_SIZE = 0.2  # 20% test, 80% train
     RANDOM_STATE = 42
     
     # User confirmation
-    print("\n" + "_"*60)
+    print("\n" + "="*60)
     print("Dataset Split")
-    print("_"*60)
-    print(f"\nSource Directory: {BASE_DIR}/")
+    print("="*60)
+    print(f"\nSource Directory: {source_directory}/")
     print(f"Classes: {', '.join(CLASSES)}")
     print(f"Split Ratio: {int((1-TEST_SIZE)*100)}% Train / {int(TEST_SIZE*100)}% Test")
     print("\nFolders that will be created:")
-    print(f"  - {BASE_DIR}/train/")
-    print(f"  - {BASE_DIR}/test/")
+    print(f"  - {destination_directory}/train/")
+    print(f"  - {destination_directory}/test/")
     
     user_input = input("\nContinue? (yes/no): ").strip().lower()
     
     if user_input in ['yes', 'y']:
         # Split dataset
         split_dataset(
-            source_dir=BASE_DIR,
-            dest_dir=BASE_DIR,
+            source_dir=source_directory,
+            dest_dir=destination_directory,
             classes=CLASSES,
             test_size=TEST_SIZE,
             random_state=RANDOM_STATE
         )
         
         # Verify split
-        verify_split(BASE_DIR, CLASSES)
+        verify_split(destination_directory, CLASSES)
         
     else:
         logger.info("Split cancelled by user!")

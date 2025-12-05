@@ -7,8 +7,8 @@ Usage:
     from src.data.dataset_loader import get_dataloaders
     
     train_loader, test_loader = get_dataloaders(
-        train_dir='data/water_dataset/train',
-        test_dir='data/water_dataset/test',
+        train_dir='data/water_dataset_split/train',
+        test_dir='data/water_dataset_split/test',
         batch_size=32
     )
 """
@@ -50,8 +50,8 @@ def get_dataloaders(train_dir, test_dir, batch_size=32, num_workers=4):
         
     Example:
         train_loader, test_loader = get_dataloaders(
-            'data/water_dataset/train',
-            'data/water_dataset/test',
+            'data/water_dataset_split/train',
+            'data/water_dataset_split/test',
             batch_size=32
         )
     """
@@ -137,7 +137,7 @@ def verify_dataset(data_dir):
         dict: Statistics about dataset
         
     Example:
-        stats = verify_dataset('data/water_dataset/train')
+        stats = verify_dataset('data/water_dataset_split/train')
     """
     
     logger.info(f"Verifying dataset: {data_dir}")
@@ -191,8 +191,8 @@ if __name__ == "__main__":
     logger.info("="*60)
     
     # Paths
-    TRAIN_DIR = 'data/water_dataset/train'
-    TEST_DIR = 'data/water_dataset/test'
+    TRAIN_DIR = 'data/water_dataset_split/train'
+    TEST_DIR = 'data/water_dataset_split/test'
     
     # Test 1: Verify datasets
     logger.info("\n1. Verifying datasets...")
