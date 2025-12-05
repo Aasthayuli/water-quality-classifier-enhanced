@@ -103,8 +103,14 @@ def create_timestamped_log(name, log_dir='outputs/logs', level=logging.INFO):
     """
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     log_file = os.path.join(log_dir, f"{name}_{timestamp}.log")
-    
+
+    # Clear old logger if this name was used before
+    old_logger = logging.getLogger(name)
+    if old_logger.hasHandlers():
+        old_logger.handlers.clear()
+        
     return setup_logger(name, log_file, level)
+
 
 
 # Example usage and testing

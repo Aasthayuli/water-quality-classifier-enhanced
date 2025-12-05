@@ -257,8 +257,8 @@ def create_default_config():
         },
         
         'data': {
-            'train_dir': 'data/water_dataset/train',
-            'test_dir': 'data/water_dataset/test',
+            'train_dir': 'data/water_dataset_split/train',
+            'test_dir': 'data/water_dataset_split/test',
             'image_size': 224,
             'batch_size': 32,
             'num_workers': 4
