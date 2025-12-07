@@ -30,9 +30,26 @@ from src.utils.logger import create_timestamped_log
 def parse_args():
     """
     Parse command line arguments
-    
+
     Returns:
         argparse.Namespace: Parsed arguments
+
+    Examples:
+    #### Default
+    python train.py
+     args.config = 'configs/config.yaml'
+     args.device = None
+     args.resume = None
+
+    #### Custom
+    python train.py --config configs/exp1.yaml --device cpu
+     args.config = 'configs/exp1.yaml'
+     args.device = 'cpu'
+     args.resume = None
+
+    #### Resume
+    python train.py --resume models/checkpoint.pth
+     args.resume = 'models/checkpoint.pth'
     """
     parser = argparse.ArgumentParser(description='Train Water Quality Classification Model')
     

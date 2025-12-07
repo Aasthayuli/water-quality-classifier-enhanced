@@ -24,7 +24,7 @@ import torch
 import torch.nn as nn
 from torchvision import models
 from src.utils.logger import get_logger
-from src.utils.logger import setup_logger  # for testing
+# from src.utils.logger import setup_logger  # for testing
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")

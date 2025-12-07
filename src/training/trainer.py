@@ -282,14 +282,14 @@ class Trainer:
         }
         
         # Save latest checkpoint
-        checkpoint_path = os.path.join(save_dir, f'checkpoint_epoch_{epoch}.pth')
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        checkpoint_path = os.path.join(save_dir, f'checkpoint_epoch_{timestamp}_acc{accuracy:.2f}.pth')
         torch.save(checkpoint, checkpoint_path)
         logger.info(f"Checkpoint saved: {checkpoint_path}")
         
         # Save best model
         if is_best:
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            best_path = os.path.join(save_dir, f'best_model_{timestamp}_acc{accuracy:.2f}.pth')
+            best_path = os.path.join(save_dir, f'best_model.pth')
             torch.save(checkpoint, best_path)
             logger.info(f"Best model saved: {best_path}")
     
@@ -302,7 +302,7 @@ class Trainer:
             dict: Training history
         """
         logger.info("="*60)
-        logger.info("Starting Training")
+        logger.info("Started Training")
         logger.info("="*60+"\n")
         
         for epoch in range(1, self.epochs + 1):
@@ -346,8 +346,8 @@ class Trainer:
                     logger.info(f"Learning Rate changed: {old_lr:.6f} to {new_lr:.6f}")
                 else:
                     logger.info(f"Current Learning Rate: {new_lr:.6f}")
-            logger.info(f"Epoch{epoch}/{self.epochs} Complete\n")
-            logger.info("-" * 60)
+            logger.info(f"Epoch {epoch}/{self.epochs} Complete!")
+            logger.info("-" * 60+"\n")
         
         logger.info("="*60)
         logger.info("Training Complete!")
