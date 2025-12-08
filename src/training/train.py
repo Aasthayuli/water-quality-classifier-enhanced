@@ -12,6 +12,7 @@ Usage:
 
 import os
 import sys
+import json
 import argparse
 import torch
 from datetime import datetime
@@ -237,6 +238,20 @@ def main():
         logger.error(traceback.format_exc())
         sys.exit(1)
     
+    # Save training history
+    logger.info("Saving training history...")
+    try:
+        save_dir = config['paths']['save_dir']
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        history_path = os.path.join(save_dir, f'history_{timestamp}.json')
+    
+        with open(history_path, 'w') as f:
+            json.dump(history, f, indent=2)
+    
+        logger.info(f"History saved to: {history_path}")
+    except Exception as e:
+        logger.error(f"Failed to save history: {str(e)}")
+
     # Save final model
     logger.info("="*60)
     logger.info("Saving Final Model")
