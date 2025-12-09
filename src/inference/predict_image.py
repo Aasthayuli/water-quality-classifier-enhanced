@@ -30,9 +30,9 @@ logger = setup_logger('predict_image', 'outputs/logs/predict_image.log')
 # Class names and colors
 CLASS_NAMES = ['clean', 'muddy', 'polluted']
 CLASS_COLORS = {
-    'clean': 'blue',
-    'muddy': 'brown',
-    'polluted': 'black'
+    'clean': 'green',
+    'muddy': 'orange',
+    'polluted': 'red'
 }
 
 

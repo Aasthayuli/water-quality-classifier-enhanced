@@ -23,12 +23,13 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from src.models.resnet18_model import load_model
 from src.data.preprocessing import preprocess_single_image
-from src.utils.logger import setup_logger
+from src.utils.logger import create_timestamped_log
 
 
 # Setup logger
-logger = setup_logger('visualization', 'outputs/logs/visualization.log')
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
+logger = create_timestamped_log('visualization', LOG_DIR)
 
 # Class names
 CLASS_NAMES = ['clean', 'muddy', 'polluted']
@@ -202,7 +203,7 @@ def visualize_sample_predictions(model, image_paths, device, save_path=None):
         axes[idx].axis('off')
         
         # Color based on prediction
-        colors = {'clean': 'blue', 'muddy': 'brown', 'polluted': 'black'}
+        colors = {'clean': 'green', 'muddy': 'orange', 'polluted': 'red'}
         color = colors[predicted_class]
         
         title = f'{predicted_class.upper()}\n{confidence_value:.1f}%'
