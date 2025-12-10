@@ -10,7 +10,7 @@ This enhanced release brings transfer learning with ResNet18, modular preprocess
 
 ### Image Classification Demo
 
-https://github.com/Aasthayuli/water-quality-classifier-enhanced/blob/main/demo_video/Video%20Project%204.mp4
+[Click to watch Image Prediction](https://drive.google.com/file/d/1rH38jD9Cx7B0mHxqxStCao1wFBarDZVL/view?usp=sharing)
 
 ---
 
