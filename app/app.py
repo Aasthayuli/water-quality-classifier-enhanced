@@ -59,7 +59,7 @@ def download_model_from_drive():
         st.info(f"Model found !")
         return LOCAL_MODEL_PATH
     
-    st.info("Wait! Downloading model ...")
+    st.info("Downloading model ...")
     
     try:
         # Create models directory
@@ -69,7 +69,7 @@ def download_model_from_drive():
         url = f"https://drive.google.com/uc?export=download&id={MODEL_GDRIVE_ID}"
         gdown.download(url, LOCAL_MODEL_PATH, quiet=False)
         
-        st.success(f"Model downloaded successfully!")
+        st.success(f"Model downloaded!")
         return LOCAL_MODEL_PATH
         
     except Exception as e:
