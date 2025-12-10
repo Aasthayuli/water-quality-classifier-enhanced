@@ -5,4 +5,7 @@ pillow
 numpy
 tqdm
 scikit-learn
-jupyter
+seaborn
+opencv-python
+streamlit
+gdown

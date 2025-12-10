@@ -29,22 +29,31 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# macOS (in case repo kabhi Mac se open ho)
+# macOS (in case repo gets cloned on macOS)
 .DS_Store
 .AppleDouble
 .LSOverride
 
+# streamlit specific
+.streamlit/
+
+# configuration files
+configs/
+
 # ------------------------
 # Logs & Outputs
 # ------------------------
+outputs/
 outputs/logs/
 outputs/graphs/
 outputs/predictions/
+outputs/evaluation/
 *.log
 
 # ------------------------
 # ML/DL Checkpoints & Models
 # ------------------------
+models/
 models/**/*.pt
 models/**/*.pth
 models/**/*.ckpt
@@ -54,6 +63,7 @@ models/**/*.ckpt
 # ------------------------
 # Local Data
 # ------------------------
+data/
 data/water_dataset/
 data/water_dataset_split/
 data/**/raw/

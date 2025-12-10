@@ -27,11 +27,11 @@ The system leverages:
 
 | Metric                       | Value                        |
 | ---------------------------- | ---------------------------- |
-| **Best Validation Accuracy** | 92.39%                       |
-| **Training Accuracy**        | 94.25%                       |
+| **Best Validation Accuracy** | 88.04%                       |
+| **Training Accuracy**        | 80.55%                       |
 | **Model**                    | ResNet18 (Transfer Learning) |
 | **Epochs Trained**           | 25                           |
-| **Date**                     | Dec 6, 2025                  |
+| **Date**                     | Dec 10, 2025                 |
 | **Status**                   | 🚧 Work in Progress          |
 
 > **Note:** Model training is ongoing. Results will be updated as improvements are made.
@@ -43,10 +43,10 @@ The system leverages:
 - [x] Dataset collection & preprocessing
 - [x] Model architecture (ResNet18)
 - [x] Training pipeline
-- [x] Initial training (92.39% accuracy)
-- [ ] Model evaluation & analysis
-- [ ] Inference scripts (image/video)
-- [ ] Web application (Streamlit)
+- [x] Initial training (88.04% accuracy)
+- [x] Model evaluation & analysis
+- [x] Inference scripts (image/video)
+- [x] Web application (Streamlit)
 - [ ] Final optimization
 
 ---
@@ -57,9 +57,12 @@ The system leverages:
 Water-Quality-Classifier/
 ├── src/
 │   ├── data/           # Data loading & preprocessing
+│   ├── evaluation/     # Evaluation scripts
+│   ├── inference/      # Inference scripts
 │   ├── models/         # ResNet18 architecture
 │   ├── training/       # Training scripts
 │   └── utils/          # Utilities (logging, config)
+|   └──visualizations/  # Visualization scripts
 ├── configs/            # Configuration files
 ├── models/             # Saved models (.pth files)
 ├── outputs/            # Logs, graphs, predictions
@@ -76,6 +79,30 @@ Water-Quality-Classifier/
 python src/training/train.py
 ```
 
+### Evaluate trained model
+
+```bash
+python -m src.evaluation.evaluate.py --model models/resnet18/checkpoints/best_model.pth
+```
+
+### Visualize training results
+
+```bash
+python -m src.visualizations.preview_predictions --history outputs/logs/history.json --model models/resnet18/checkpoints/best_model.pth
+```
+
+### Predict on single image
+
+```bash
+python -m src.inference.predict_image --image test.jpg --model models/resnet18/checkpoints/best_model.pth
+```
+
+### Predict on video
+
+```bash
+python -m src.inference.predict_video --video input.mp4 --model models/resnet18/checkpoints/best_model.pth
+```
+
 ### Configuration
 
 Edit `configs/config.yaml` to modify hyperparameters.
@@ -84,7 +111,7 @@ Edit `configs/config.yaml` to modify hyperparameters.
 
 ## 📈 Training Progress
 
-**Latest Model:** `best_model_20251206_012806_acc92.39.pth`
+**Latest Model:** `best_model.pth`
 
 Training logs available in `outputs/logs/`
 
@@ -98,17 +125,6 @@ Training logs available in `outputs/logs/`
 - **Augmentation:** Rotation, flip, color jitter
 - **Optimizer:** Adam
 - **Scheduler:** StepLR
-
----
-
-## 📝 To-Do
-
-- Run comprehensive evaluation
-- Add confusion matrix visualization
-- Implement video inference
-- Create Streamlit dashboard
-- Optimize model further
-- Add deployment scripts
 
 ---
 
