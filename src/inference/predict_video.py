@@ -49,13 +49,6 @@ def parse_args():
     )
     
     parser.add_argument(
-        '--output',
-        type=str,
-        default='outputs/predictions/predicted_video.mp4',
-        help='Path to save output video'
-    )
-    
-    parser.add_argument(
         '--device',
         type=str,
         default=None,
