@@ -8,9 +8,7 @@ This enhanced release brings transfer learning with ResNet18, modular preprocess
 
 ## 🎥 Demo
 
-### Image Classification Demo
-
-[Click to watch Image Prediction](https://drive.google.com/file/d/1rH38jD9Cx7B0mHxqxStCao1wFBarDZVL/view?usp=sharing)
+[Click to watch the video](https://drive.google.com/file/d/1qdAFsgFfZ8iw7Yd2BMAp66LhWt1OdVhI/view?usp=sharing)
 
 ---
 
@@ -40,7 +38,7 @@ The system leverages:
 | **Model**                    | ResNet18 (Transfer Learning) |
 | **Epochs Trained**           | 25                           |
 | **Date**                     | Dec 10, 2025                 |
-| **Status**                   | 🚧 Work in Progress          |
+| **Status**                   | Completed                    |
 
 > **Note:** Model training is ongoing. Results will be updated as improvements are made.
 
@@ -65,6 +63,7 @@ The system leverages:
 
 ```
 Water-Quality-Classifier/
+├── app/                # Streamlit web app
 ├── src/
 │   ├── data/           # Data loading & preprocessing
 │   ├── evaluation/     # Evaluation scripts
@@ -119,14 +118,6 @@ Edit `configs/config.yaml` to modify hyperparameters.
 
 ---
 
-## 📈 Training Progress
-
-**Latest Model:** `best_model.pth`
-
-Training logs available in `outputs/logs/`
-
----
-
 ## 🔧 Technologies Used
 
 - **Framework:** PyTorch
@@ -148,7 +139,7 @@ Training logs available in `outputs/logs/`
 
 ## 🤝 Contributing
 
-This is a work-in-progress project. Feedback and suggestions welcome!
+Feedback and suggestions welcome!
 
 ---
 
