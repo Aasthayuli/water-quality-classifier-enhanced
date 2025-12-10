@@ -6,6 +6,14 @@ This enhanced release brings transfer learning with ResNet18, modular preprocess
 
 ---
 
+## 🎥 Demo
+
+### Image Classification Demo
+
+https://github.com/Aasthayuli/water-quality-classifier-enhanced/blob/main/demo_video/Video%20Project%204.mp4
+
+---
+
 # 🚀 Project Overview
 
 This classifier predicts three water-quality categories:
@@ -19,7 +27,7 @@ The system leverages:
 - Transfer Learning (ResNet18) for high-accuracy feature extraction
 - A dedicated preprocessing pipeline
 - Structured logging for training and inference
-- Upcoming video frame extraction module for real-time classification
+- Video-based classification pipeline added (frame extraction + prediction).
 
 ---
 
@@ -45,7 +53,9 @@ The system leverages:
 - [x] Training pipeline
 - [x] Initial training (88.04% accuracy)
 - [x] Model evaluation & analysis
-- [x] Inference scripts (image/video)
+- [x] Inference scripts (image)
+- [x] Video frame extraction module
+- [x] Video classification pipeline
 - [x] Web application (Streamlit)
 - [ ] Final optimization
 
@@ -132,7 +142,6 @@ Training logs available in `outputs/logs/`
 
 - Model trained on high-quality stock images
 - May need fine-tuning for mobile camera images
-- Performance on low-light conditions untested
 - Future work: Add real-world mobile camera data
 
 ---
