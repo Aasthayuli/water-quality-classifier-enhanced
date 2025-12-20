@@ -33,11 +33,11 @@ The system leverages:
 
 | Metric                       | Value                        |
 | ---------------------------- | ---------------------------- |
-| **Best Validation Accuracy** | 88.04%                       |
-| **Training Accuracy**        | 80.55%                       |
+| **Best Validation Accuracy** | 67.16%                       |
+| **Training Accuracy**        | 64.03%                       |
 | **Model**                    | ResNet18 (Transfer Learning) |
-| **Epochs Trained**           | 25                           |
-| **Date**                     | Dec 10, 2025                 |
+| **Epochs Trained**           | 15                           |
+| **Date**                     | Dec 20, 2025                 |
 | **Status**                   | Completed                    |
 
 > **Note:** Model training is ongoing. Results will be updated as improvements are made.

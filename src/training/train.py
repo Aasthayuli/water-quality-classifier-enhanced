@@ -217,7 +217,7 @@ def main():
     try:
         history = trainer.train()
     except KeyboardInterrupt:
-        logger.warning("\nTraining interrupted by user!!!")
+        logger.warning("Training interrupted by user!!!")
         logger.info("Saving current model...")
         
         # Save interrupted model
