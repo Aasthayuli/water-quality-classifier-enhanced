@@ -67,5 +67,5 @@ def predict_video(video_path, transform, model, device):
     plt.title(f"Video Prediction: {CLASSES[pred_class]} (Avg conf: {avg_confidence * 100:.2f}%)")
     plt.show()
 
-    return pred_class, avg_confidence
+    return pred_class, avg_confidence* 100
 

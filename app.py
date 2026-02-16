@@ -15,6 +15,8 @@ def load_transform():
     return transform
 
 def download_model_from_drive():
+    os.makedirs("artifacts", exist_ok=True)  
+
     file_id = "14lnAyZietBRvBk3Ai-RgVntGYc3iqMgq"
     url = f"https://drive.google.com/uc?id={file_id}"
     response = requests.get(url, stream=True)
@@ -23,6 +25,7 @@ def download_model_from_drive():
     with open(MODEL_PATH, "wb") as f:
         for chunk in response.iter_content(8192):
             f.write(chunk)
+
 
 
 @st.cache_resource
