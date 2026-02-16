@@ -1,6 +1,6 @@
 # Water Quality Classification using Deep Learning
 
-A deep learning–based image classification system that predicts water quality categories from images.
+A deep learning–based image classification system that predicts water quality categories from images and Videos.
 
 The model classifies water samples into three categories:
 
@@ -9,6 +9,24 @@ The model classifies water samples into three categories:
 - Polluted
 
 ---
+
+## Working Demo
+
+[Checkout this Video](https://drive.google.com/file/d/1QncrbrDoZ6AXWrFxbgrqDrbpdOtj9Mt6/view?usp=sharing)
+
+## Screenshots
+
+### About Model
+
+![About](screenshots/about.png)
+
+### Image Prediction
+
+![Image Prediction](screenshots/image_pred.png)
+
+### Video Prediction
+
+![Video prediction](screenshots/video_pred.png)
 
 ## Project Structure
 
@@ -75,7 +93,7 @@ This will:
 - Framework: PyTorch
 - Loss Function: CrossEntropyLoss
 - Optimizer: Adam
-- Evaluation Metric: Accurac
+- Evaluation Metric: Accuracy
 
 ## Running the Streamlit App
 
@@ -85,7 +103,7 @@ streamlit run app.py
 
 The app allows users to:
 
-- Upload an image
+- Upload an image/ Video
 - Run prediction
 - View predicted water quality class
 
@@ -114,6 +132,11 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
+
+## Limitation
+
+- Model is trained on high quality images from unsplash, pixel, pixabay, etc.
+- Lacks real world camera picture exposure.
 
 ## Author
 
