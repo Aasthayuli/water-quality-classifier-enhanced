@@ -18,7 +18,7 @@ def download_model_from_drive():
     os.makedirs("artifacts", exist_ok=True)  
 
     file_id = "14lnAyZietBRvBk3Ai-RgVntGYc3iqMgq"
-    url = f"https://drive.google.com/uc?id={file_id}"
+    url = f"https://drive.google.com/uc?export=download&id={file_id}"
     response = requests.get(url, stream=True)
     response.raise_for_status()
 
