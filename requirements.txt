@@ -5,8 +5,7 @@ tqdm
 scikit-learn
 seaborn
 opencv-python
-gdown
-torch==2.2.2
-torchvision==0.17.2
+torch
+torchvision
 huggingface_hub
 streamlit
