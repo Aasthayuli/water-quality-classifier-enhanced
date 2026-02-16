@@ -1,45 +1,33 @@
 import streamlit as st
 import torch
-from src.data_pipeline import get_transforms
 from src.model import WaterQualityResNet18
+from src.data_pipeline import get_transforms
 from src.predict import predict_video, predict_image
-import os
-import requests
+from huggingface_hub import hf_hub_download
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-MODEL_PATH = "artifacts/best_model.pth"
 
 @st.cache_resource
 def load_transform():
     _, transform = get_transforms()
     return transform
 
-def download_model_from_drive():
-    os.makedirs("artifacts", exist_ok=True)  
-
-    file_id = "14lnAyZietBRvBk3Ai-RgVntGYc3iqMgq"
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
-    response = requests.get(url, stream=True)
-    response.raise_for_status()
-
-    with open(MODEL_PATH, "wb") as f:
-        for chunk in response.iter_content(8192):
-            f.write(chunk)
-
-
 
 @st.cache_resource
 def load_model():
-    if not os.path.exists(MODEL_PATH):
-        st.info("Downloading model Weights . . .")
-        download_model_from_drive()
-        st.success("Download complete.")
+    path = hf_hub_download(
+        repo_id="Aasthayuli/water-quality-classifier",  
+        filename="best_model.pth"
+    )
 
-    model = WaterQualityResNet18(num_classes=3, pretrained=True, freeze_backbone=False)
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    model = WaterQualityResNet18(num_classes=3, pretrained=False)
+    state_dict = torch.load(path, map_location=device)
+    model.load_state_dict(state_dict)
+
     model.to(device)
     model.eval()
     return model
+
 
 transform = load_transform()
 model = load_model()
