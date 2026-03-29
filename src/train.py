@@ -10,6 +10,7 @@ CLASSES = ['clean', 'muddy', 'polluted']
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+
 torch.manual_seed(42)
 if device == "cuda":
     torch.cuda.manual_seed_all(42)
@@ -17,7 +18,17 @@ if device == "cuda":
 def train_model(model, train_loader, test_loader, epochs=5, lr=1e-3, save_path="../artifacts"):
     model = model.to(device)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=lr)
+
+    optimizer = optim.Adam(
+    filter(lambda p: p.requires_grad, model.parameters()),
+    lr=lr,
+    weight_decay=5e-4
+)
+    scheduler = torch.optim.lr_scheduler.StepLR(
+    optimizer, 
+    step_size=3,   
+    gamma=0.3      
+)
 
     best_model_wts = None
     best_val_acc = 0.0
@@ -27,7 +38,11 @@ def train_model(model, train_loader, test_loader, epochs=5, lr=1e-3, save_path="
         'val_acc': [],
         'val_loss': []
     }
-    
+
+    patience = 3
+    counter = 0
+
+
     for epoch in range(1, epochs+1):
         # training
         model.train()
@@ -68,16 +83,31 @@ def train_model(model, train_loader, test_loader, epochs=5, lr=1e-3, save_path="
         val_acc = 100 * correct / total
         history['val_acc'].append(val_acc)
         history['val_loss'].append(val_loss)
+
+        scheduler.step()
+        current_lr = optimizer.param_groups[0]['lr']
+        print(f"Learning Rate is now: {current_lr}")
         
         print(f'Epoch {epoch}: Train Loss {train_loss:.4f}, Train Acc {train_acc:.2f}% | Val Loss {val_loss:.4f}, Val Acc {val_acc:.2f}%')
-        if(val_acc > best_val_acc):
+    
+
+        os.makedirs(save_path, exist_ok=True)
+        model_path = os.path.join(save_path, "best_model.pth")
+
+        if val_acc > best_val_acc:
             best_val_acc = val_acc
             best_model_wts = model.state_dict().copy()
-            os.makedirs(save_path, exist_ok=True)
-            model_path = os.path.join(save_path, "best_model.pth")
+            counter = 0
             torch.save(best_model_wts, model_path)
+        else:
+            counter += 1
 
+        if counter >= patience:
+            print("Early stopping triggered")
+            break
 
+    if best_model_wts is not None:
+        model.load_state_dict(best_model_wts)
     return model, history
 
 def evaluate_model(model, test_loader):

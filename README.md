@@ -1,18 +1,36 @@
 # Water Quality Classification using Deep Learning
 
-A deep learning–based image classification system that predicts water quality categories from images and Videos.
-
-The model classifies water samples into three categories:
+An end-to-end deep learning system for classifying water quality from images and videos into:
 
 - Clean
 - Muddy
 - Polluted
 
+The project uses transfer learning with ResNet18, along with optimization techniques to improve generalization and reduce overfitting.
+
+---
+
+## 🚀 Key Features
+
+- Image and video-based prediction
+
+- Transfer learning using pretrained ResNet18
+
+- Fine-tuning with selective layer unfreezing
+
+- Learning rate scheduling + early stopping
+
+- Data augmentation for better generalization
+
+- Modular pipeline (data → training → inference)
+
+- Streamlit-based UI for real-time predictions
+
 ---
 
 ## Working Demo
 
-[Checkout this Video](https://drive.google.com/file/d/1QncrbrDoZ6AXWrFxbgrqDrbpdOtj9Mt6/view?usp=sharing)
+[Watch Demo Video](https://drive.google.com/file/d/1QncrbrDoZ6AXWrFxbgrqDrbpdOtj9Mt6/view?usp=sharing)
 
 ## Screenshots
 
@@ -28,115 +46,105 @@ The model classifies water samples into three categories:
 
 ![Video prediction](screenshots/video_pred.png)
 
+---
+
 ## Project Structure
 
 ```
-└── 📁WQC
-    └── 📁artifacts
-        ├── best_model.pth
-    └── 📁data
-        └── 📁split_dataset
-            └── 📁test
-                └── 📁clean
-                └── 📁muddy
-                └── 📁polluted
-            └── 📁train
-                └── 📁clean
-                └── 📁muddy
-                └── 📁polluted
-        └── 📁water_dataset
-            └── 📁clean
-            └── 📁muddy
-            └── 📁polluted
-        ├── clean_vdo2.mp4   # Example Video
-    └── 📁notebooks
-        ├── data_pipeline.ipynb
-        ├── image_prediction.ipynb
-        ├── model_training.ipynb
-        ├── video_prediction.ipynb
-    └── 📁Scripts
-        ├── data_preparation.py
-        ├── prediction.py
-        ├── train_model.py
-    └── 📁src
-        ├── __init__.py
-        ├── data_pipeline.py
-        ├── model.py
-        ├── predict.py
-        ├── train.py
-        ├── utils.py
-    ├── app.py
-    ├── README.md
-    ├── requirements.txt
-    └── structure.md
+src/        → core logic (model, training, prediction)
+scripts/    → execution scripts
+data/       → dataset (raw + split)
+artifacts/  → trained model weights
+app.py      → Streamlit UI
 ```
 
----
-
 ## Dataset Preparation
-
-To split the dataset into training and testing sets:
 
 ```bash
 python -m Scripts.data_preparation
 ```
 
-This will:
+- Splits dataset into train/test (80/20)
+- Ensures reproducibility using fixed random seed
 
-- Read images from data/water_dataset
-- Split into train/test
-- Save to data/split_dataset
+## Model Training
 
-## Model
+To Train the model:
 
-- Architecture: ResNet-based transfer learning
-- Framework: PyTorch
-- Loss Function: CrossEntropyLoss
-- Optimizer: Adam
-- Evaluation Metric: Accuracy
+```bash
+python -m Scripts.train_model
+```
 
-## Running the Streamlit App
+#### Training Highlights:
+
+- Transfer learning (ImageNet pretrained ResNet18)
+- Fine-tuning (last layer + layer4)
+- Optimizer: Adam + Weight Decay
+- Scheduler: StepLR
+- Early stopping based on validation accuracy
+
+## Model Performance
+
+- Best Validation Accuracy: ~85%
+- Controlled overfitting (train-val gap ~8%)
+- Evaluated using: Accuracy, Classification Report, Confusion Matrix
+- **Result**: Improved validation accuracy from **~76% to ~85%**
+
+---
+
+## Inference
+
+#### Image Prediction
+
+```
+python -m scripts.prediction
+```
+
+#### Video Prediction
+
+- Extracts frames
+- Predicts each frame
+- Uses majority voting for final result
+
+---
+
+## Streamlit App
 
 ```bash
 streamlit run app.py
 ```
 
-The app allows users to:
+#### Features:
 
-- Upload an image/ Video
-- Run prediction
-- View predicted water quality class
+- Upload image/video
+- Real-time prediction
 
-## Deployment Notes
-
-- Model weights are not stored in the GitHub repository.
-- During deployment, weights are loaded dynamically.
-- Caching is used to prevent repeated model loading.
+---
 
 ## Installation
 
-Create virtual environment:
-
-```bash
+```
 python -m venv .venv
-```
-
-Activate:
-
-```bash
 .venv/Scripts/activate
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
 ```
 
+---
+
+## 📌 Key Learnings
+
+- Handling overfitting using augmentation and regularization
+- Trade-off between model accuracy and generalization
+- Fine-tuning pretrained models effectively
+- Importance of validation-based model selection
+
+---
+
 ## Limitation
 
-- Model is trained on high quality images from unsplash, pixel, pixabay, etc.
-- Lacks real world camera picture exposure.
+- Dataset is relatively small (~600 images)
+- Limited real-world variability (lighting, camera noise)
+- Performance may drop on unseen real-world conditions
 
 ## Author
 

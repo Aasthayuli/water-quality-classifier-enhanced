@@ -16,8 +16,16 @@ class WaterQualityResNet18(nn.Module):
         if freeze_backbone:
             for param in self.model.parameters():
                 param.requires_grad = False
+
             for param in self.model.fc.parameters():
                 param.requires_grad = True
+
+        else: # fine tuning
+            for name, param in self.model.named_parameters():
+                if "layer4" in name or "fc" in name:
+                    param.requires_grad = True
+                else:
+                    param.requires_grad = False
 
     def forward(self, x):
         return self.model(x)
