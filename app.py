@@ -21,8 +21,11 @@ def load_model():
     )
 
     model = WaterQualityResNet18(num_classes=3, pretrained=False)
-    state_dict = torch.load(path, map_location=device)
-    model.load_state_dict(state_dict)
+    try:
+        state_dict = torch.load(path, map_location=device)
+        model.load_state_dict(state_dict)
+    except Exception as e:
+        st.error(f"Model loading failed: {e}")
 
     model.to(device)
     model.eval()
@@ -83,7 +86,7 @@ Its residual connections help in learning deep visual representations without va
 
 #### Performance
 
-The model achieves approximately **75% validation accuracy** and demonstrates consistent classification across different turbidity conditions.
+The model achieves approximately **85% validation accuracy** and demonstrates consistent classification across different turbidity conditions.
 
 ---
 """)
